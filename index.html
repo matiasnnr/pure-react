@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">React is not rendered</div>
+    <script src="https://unpkg.com/react@18.0.0-rc.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.0.0-rc.0/umd/react-dom.development.js"></script>
+    <script>
+      const Person = (props) => {
+        return React.createElement("div", { key: "App" }, [
+          React.createElement("h1", { key: "h1-1" }, props.name),
+          React.createElement("p", { key: "p-1" }, props.occupation),
+        ]);
+      };
+
+      const App = () => {
+        // React.createElement(1, 2, 3) -> allow us to create jsx elements
+        // it receive three arguments
+        // 1. component that we want to render: div, h1, span, etc.
+        // 2. object with a key: value that contains different attributes we want: class, id or any other additional properties
+        // 3. children that we want to render, typically we pass this as an array []:
+        return React.createElement("div", {}, [
+          React.createElement(
+            "h1",
+            { className: "title", key: "h1-2" },
+            "React IS rendered"
+          ),
+          React.createElement(
+            Person,
+            { name: "Matias", occupation: "Software Developer", key: 1 },
+            null
+          ),
+          React.createElement(
+            Person,
+            { name: "Nicolás", occupation: "Instructor", key: 2 },
+            null
+          ),
+          React.createElement(
+            Person,
+            { name: "Andrei", occupation: "Software Developer", key: 3 },
+            null
+          ),
+        ]);
+      };
+
+      // < React 18 -> it is necessary to render the app
+      //   ReactDOM.render(
+      //     React.createElement(App), // is necessary to use a new React.createElement to do it work
+      //     document.getElementById("root") // we need a target, an element on the page that we can use to render to
+      //   );
+
+      // > React 18 -> it is necessary to render the app
+      const container = document.getElementById("root");
+      root = ReactDOM.createRoot(container);
+      root.render(React.createElement(App));
+    </script>
+  </body>
+</html>
